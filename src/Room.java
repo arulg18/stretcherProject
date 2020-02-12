@@ -1,14 +1,19 @@
 public class Room {
 
-    public String roomid;
+    String[] roomTypes = {"Room", "Radiology Room", "Toxicology Room", "Pulmonary Function Lab", "Recovery Room"};// find room types
+    public int roomID;
     public int x,y;
-    public boolean[] schedule = new boolean[288];
-    public int roomtype;
+    public int[] schedule = new int[288]; //Segment Tree
+    public int type;
 
-    public Room(String roomid, int x, int y, int roomtype) {
-        this.roomid = roomid;
+    public Room(int roomID, int x, int y, int type) {
+        this.roomID = roomID;
         this.x = x;
         this.y = y;
-        this.roomtype = roomtype;
+        this.type = type;
+    }
+
+    public String getRoomName(){
+        return roomTypes[roomID];
     }
 }

@@ -1,13 +1,17 @@
 public class Patient {
-    public String personid;
-    public String stretcherid;
-    public String prioritylevel;
-    public Patient(String personid1, String prioritylevel1, String stretcherid1){
-        personid = personid1;
-    stretcherid = stretcherid1;
- prioritylevel = prioritylevel1;
+    public int personID;
+    public int currentRoomID;
+    public String patientName;
+    public int stretcherID;
+    public int priorityLevel;
 
-
+    public Patient(int personID, int currentRoomID, String patientName, int stretcherID, int priorityLevel) {
+        this.personID = personID;
+        this.currentRoomID = currentRoomID;
+        this.patientName = patientName;
+        this.stretcherID = stretcherID;
+        this.priorityLevel = priorityLevel;
     }
+
 
 }
