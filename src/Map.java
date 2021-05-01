@@ -118,6 +118,77 @@ public class Map {
         }
     }
 
+    public static class JunctionTree{
+        LinkedList<JunctionPair> junctionPath;
+
+    }
+
+    public static class Vector{
+
+        int xi, xf;
+        int yi, yf;
+
+        int direction;
+        double length;
+
+        public Vector(int xi, int xf, int yi, int yf) {
+            this.xi = xi;
+            this.xf = xf;
+            this.yi = yi;
+            this.yf = yf;
+
+            direction = (int) Math.toDegrees(Math.atan2(yf-yi, xf-xi));
+            length = Math.hypot(xf-xi, yf-yi);
+        }
+        public boolean add(int newxF, int newyF){
+            if (direction != (int) Math.toDegrees(Math.atan2(newyF-yf, newxF-xf))){
+                return false;
+            }
+            else {
+                length += Math.hypot(newxF-xf, newyF -yf);
+                xf = newxF;
+                yf = newyF;
+
+            }
+            return true;
+        }
+
+        @Override
+        public String toString() {
+            return String.format("(%s, %s) --> (%s, %s); L: %s; Direction: %s", xi, yi, xf, yf, length, direction);
+        }
+    }
+    public LinkedList<Vector> pathProcessor(Stack<Node> path) {
+        LinkedList<Vector> instructions;
+        instructions = new LinkedList<>();
+        System.out.println(path);
+        Node s = path.pop();
+        Node s2 = path.pop();
+        Vector u = new Vector(s.x, s2.x, s.y, s2.y);
+        while (path.size() > 0){
+            Node n = path.pop();
+            if (!u.add(n.x, n.y)){
+                instructions.add(u);
+                u = new Vector(n.last.x, n.x, n.last.y, n.y);
+            }
+        }
+        instructions.add(u);
+
+        return instructions;
+    }
+
+
+    public static class JunctionPair{
+        int x,y;
+        int b1,b2;
+
+        public JunctionPair(int x, int y, int b1, int b2) {
+            this.x = x;
+            this.y = y;
+            this.b1 = b1;
+            this.b2 = b2;
+        }
+    }
 
 
     public Node startP;
@@ -133,8 +204,11 @@ public class Map {
 
         map.printPathwayCoordinates();
         map.displayPath();
+        LinkedList<Vector> pathProcess = map.pathProcessor(map.pathway.pathway);
 
-
+        for (Vector p: pathProcess) {
+            System.out.println(p);
+        }
     }
     public boolean searchCheck(Node start, Node end){
         startP = start;
@@ -233,9 +307,7 @@ public class Map {
                     visited[nx][ny] = true;
 
                     add(queue, k, destination, new Node(nx, ny, f, current));
-
                 }
-
             }
 
         }

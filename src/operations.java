@@ -53,11 +53,13 @@ public class operations {
                 Map.Path path = map.pathway(currentRoomID, eligibleRooms.get(i).roomID);
                 if (path.pathDuration < min){
                     shortestPath = path;
-                    min = path.pathDuration;
+                     min = path.pathDuration;
                     finalRoomID = eligibleRooms.get(i).roomID;
                 }
 
             }
+
+
 
 
             // Find the stretchers in the area
